@@ -19,6 +19,12 @@ export function SignIn(){
         signIn({ email, password })
     }
 
+    function handleEnterKeyPress(event) {
+        if (event.key === 'Enter') {
+            handleSignIn();
+        }
+    }
+
     return(
         <Container >
             <Form>
@@ -43,6 +49,7 @@ export function SignIn(){
                         type="password"
                         placeholder="No mínimo 6 caracteres"
                         onChange={e => setPassword(e.target.value)}
+                        onKeyPress={handleEnterKeyPress}
                     />
 
                     <Button title="Entrar" onClick={handleSignIn}/>

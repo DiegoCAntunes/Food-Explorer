@@ -117,9 +117,9 @@ export function NewPlate(){
                                 <select id="categories"
                                 onChange={e => setCategory(e.target.value)}
                                 >
-                                    <option value="fruit">Fruit</option>
-                                    <option value="veg">Veg</option>
-                                    <option value="meat">Meat</option>
+                                    <option value="Refeições">Refeições</option>
+                                    <option value="Sobremesas">Sobremesas</option>
+                                    <option value="Bebidas">Bebidas</option>
                                 </select>
                                 <RiArrowDownSLine size={24} />
                             </div>

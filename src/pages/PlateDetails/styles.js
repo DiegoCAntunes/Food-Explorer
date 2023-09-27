@@ -68,11 +68,15 @@ export const Body = styled.div`
                 align-items: center;
                 gap: 16px;
                 font-size: 20px;
+
+                >svg{
+                    overflow: visible;
+                }
                 
-                >button{
-                    font-size: 10px;
+                >.button{
                     height: 38px;
                     width: 100%;
+                    padding: 12px 24px;
                 }
             }
         }

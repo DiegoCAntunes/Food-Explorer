@@ -10,9 +10,12 @@ import { Button } from "../../components/Button";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from '../../services/api'
+import { useAuth } from "../../hooks/auth";
 
 export function PlateDetails(){
-    const [isAdmin, setIsAdmin] = useState(false)
+    const { user, updateProfile } = useAuth()
+    
+    const [isAdmin, setIsAdmin] = useState(user.isAdmin)
     const [data, setData] = useState(null)
 
     const params = useParams()
@@ -20,6 +23,10 @@ export function PlateDetails(){
 
     function handleBack(){
         navigate(-1)
+    }
+
+    function handleEdit(){
+        navigate(`/edit/${params.id}`)
     }
 
     useEffect(() => {
@@ -56,11 +63,11 @@ export function PlateDetails(){
                         }
 
                         {isAdmin ? 
-                        <Button title="Editar prato"/> :
+                        <div><Button title="Editar prato" onClick={() => handleEdit()}/></div> :
                         <div>
-                            <FiMinus size={40}/>
+                            <FiMinus size={24}/>
                             <p>01</p>
-                            <FiPlus size={40}/>
+                            <FiPlus size={24}/>
                             <Button icon={PiReceipt} title={`pedir - R$ ${data.price}`} />
                         </div>
                         }
