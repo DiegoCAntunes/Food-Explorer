@@ -3,6 +3,11 @@ import { FiPlus, FiX } from "react-icons/fi";
 import { Container } from "./styles";
 
 export function NoteItem({ isNew, value, onClick, ...rest }) {
+    function handleKeyDown(event) {
+        if (event.key === 'Enter' && isNew && value) {
+          onClick(value);
+        }
+      }
     return (
         <Container isNew={isNew}>
             {isNew ? (
@@ -10,6 +15,7 @@ export function NoteItem({ isNew, value, onClick, ...rest }) {
                     type="text"
                     value={value}
                     readOnly={!isNew}
+                    onKeyDown={handleKeyDown}
                     {...rest}
                 />
             ) : (

@@ -19,21 +19,24 @@ export function SignUp(){
 
     function handleSignUp(){
         if(!name || !email || !password){
-            return alert("Fill all the data!")
+            return alert("Preencha todos os campos!")
+        }
+        if(password.length < 6){
+            return alert("A senha deve ter no mínimo 6 caracteres.");
         }
 
         api.post("/users", { name, email, password })
         .then(() => {
-            alert("Sign up completed!")
+            alert("Sign up completo!")
             navigate("/")
         })
-        // .catch(error => {
-        //     if(error.response){
-        //         alert(error.response.data.message)
-        //     }else{
-        //         alert("Error on sign up")
-        //     }
-        // })
+        .catch(error => {
+            if(error.response){
+                alert(error.response.data.message)
+            }else{
+                alert("Error on sign up")
+            }
+        })
     }
 
     return(
@@ -66,6 +69,7 @@ export function SignUp(){
                         type="password"
                         placeholder="No mínimo 6 caracteres"
                         onChange={e => setPassword(e.target.value)}
+                        minLength={6}
                     />
 
                     <Button title="Criar conta" onClick={handleSignUp}/>

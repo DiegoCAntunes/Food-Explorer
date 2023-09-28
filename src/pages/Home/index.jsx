@@ -19,6 +19,7 @@ export function Home(){
     const [search, setSearch] = useState("")
     const [ingredientsSelected, setIngredientsSelected] = useState([])
     const categories = [];
+    
     plates.forEach(plate => {
       const categoryExists = categories.some(cat => cat === plate.category);
       if (!categoryExists) {
@@ -45,14 +46,14 @@ export function Home(){
 
   return(
       <Container>
-          <Header onChange={e => setSearch(e.target.value)}/>
+          <Header onChange={e => setSearch(e.target.value)} setSearch={setSearch} search={search}/>
           <Body>
 
             <Logo>
                 <img src={Macaron} alt="macaron image"/>
                 <div>
-                    <h1>Sabores inigualáveis</h1>
-                    <p>Sinta o cuidado do preparo com ingredientes selecionados</p>    
+                  <h1>Sabores inigualáveis</h1>
+                  <p>Sinta o cuidado do preparo com ingredientes selecionados</p>    
                 </div>
             </Logo>
 

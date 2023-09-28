@@ -25,10 +25,12 @@ export function NewPlate(){
 
     const navigate = useNavigate()
 
-    function handleAddIngredient(){
-        setIngredients(prevState => [...prevState, newIngredient])
-        setNewIngredient("")
-    }
+    function handleAddIngredient(newIngredient) {
+        if (newIngredient) {
+          setIngredients(prevState => [...prevState, newIngredient]);
+          setNewIngredient("");
+        }
+      }
 
     function handleRemoveIngredient(deleted){
         setIngredients(prevState => prevState.filter(ingredient => ingredient !== deleted))
@@ -42,7 +44,9 @@ export function NewPlate(){
         console.log(avatarFile)
     }
 
-    async function handleNewPlate(){
+    async function handleNewPlate(event){
+        event.preventDefault()
+
         if(!name){
             return alert("Enter a name")
         }
@@ -86,7 +90,7 @@ export function NewPlate(){
     return(
         <Container>
             <Header />
-            <Body>
+            <Body onSubmit={handleNewPlate}>
                 <div onClick={handleBack}>
                     <FiChevronLeft size={32} />
                     <h2>voltar</h2>

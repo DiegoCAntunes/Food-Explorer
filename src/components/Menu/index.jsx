@@ -4,27 +4,50 @@ import { useState } from "react"
 import { Header, Container, Body } from "./styles"
 import { Footer } from "../Footer"
 import { Input } from "../Input"
+import { useAuth } from "../../hooks/auth"
+import { useNavigate } from "react-router-dom"
 
-export function Menu({ isOpen, onClose }) {
-    const [isAdmin, setIsAdmin] = useState(true);
+export function Menu({ isOpen, setSearch, search, onClose }) {
+  const { user, updateProfile } = useAuth()
+
+  const navigation = useNavigate()
+  const { signOut } = useAuth()
+
+  function handleSearchChange(event) {
+    const searchTerm = event.target.value;
+    setSearch(searchTerm);
+  }
+
+  function handleNewPlate(){
+    navigation(`/new`)
+}
+
+  function handleSignOut(){
+    navigation("/")
+    signOut()
+}
+    
+  const [isAdmin, setIsAdmin] = useState(user.isAdmin)
   
-    return (
-      <Container className={`menu ${isOpen ? 'open' : ''}`}>
-        <Header>
-            <FiX size={36} onClick={onClose}/>
-          <h1>Menu</h1>
-        </Header>
-        <Body>
-          <Input
-            placeholder="Busque por pratos ou ingredientes"
-            icon={FiSearch}
-          />
-          <ul>
-            {isAdmin && <li>Novo prato</li>}
-            <li>Sair</li>
-          </ul>
-        </Body>
-        <Footer />
-      </Container>
-    );
+  return (
+    <Container className={`menu ${isOpen ? 'open' : ''}`}>
+      <Header>
+          <FiX size={36} onClick={onClose}/>
+        <h1>Menu</h1>
+      </Header>
+      <Body>
+        <Input
+          placeholder="Busque por pratos ou ingredientes"
+          icon={FiSearch}
+          onChange={handleSearchChange}
+          value={search}
+        />
+        <ul>
+          {isAdmin && <li onClick={handleNewPlate}>Novo prato</li>}
+          <li onClick={handleSignOut}>Sair</li>
+        </ul>
+      </Body>
+      <Footer />
+    </Container>
+  );
 }

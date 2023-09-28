@@ -84,6 +84,8 @@ export function SideScroller({category, isAdmin, isAbove, platesByCategory, ...r
         function handleScroll() {
             manageIcons();
         }
+        window.addEventListener('resize', handleScroll)
+
                 // Manually call manageIcons after a slight delay
             setTimeout(() => {
                 manageIcons();
@@ -97,6 +99,7 @@ export function SideScroller({category, isAdmin, isAbove, platesByCategory, ...r
       
         // Clean up the event listener when the component unmounts
         return () => {
+          window.removeEventListener('resize', handleScroll)
           if (cardListElement) {
             cardListElement.removeEventListener('scroll', handleScroll);
           }

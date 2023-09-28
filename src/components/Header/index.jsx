@@ -10,7 +10,7 @@ import { Menu } from "../Menu"
 
 import { useAuth } from "../../hooks/auth";
 
-export function Header({onChange, ...rest}){
+export function Header({onChange, setSearch, search, ...rest}){
     const { user, updateProfile } = useAuth()
     
     const [isAdmin, setIsAdmin] = useState(user.isAdmin)
@@ -38,10 +38,10 @@ export function Header({onChange, ...rest}){
     return(
         <Container>
             {!isAbove768px && (
-                <FiMenu size={30} onClick={toggleMenu} />
+                <FiMenu size={30} onClick={toggleMenu} onChange={onChange} />
             )}
             {isMenuOpen && 
-            <Menu isOpen={isMenuOpen} onClose={toggleMenu} />
+            <Menu isOpen={isMenuOpen} onClose={toggleMenu} setSearch={setSearch} search={search}/>
             }
             <div>
                 <svg width="26" height="26" viewBox="0 0 39 44" fill="none" xmlns="http://www.w3.org/2000/svg">
