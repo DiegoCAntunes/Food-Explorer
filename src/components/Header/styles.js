@@ -23,13 +23,14 @@ export const Container = styled.header`
     }
 
     .menu.open {
-    display: flex;
+        display: flex;
     }
 
     >div{
         display: flex;
         gap: 8px;
         align-items: flex-start;
+        cursor: pointer;
 
         >.logo{
             display: flex;
@@ -51,6 +52,11 @@ export const Container = styled.header`
         padding: 24px 8vw;
         justify-content: center;
         white-space: nowrap;
+
+        >span{
+            font-size: 16px;
+            cursor: pointer;
+        }
 
         >div{
             >.logo{

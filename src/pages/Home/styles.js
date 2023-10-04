@@ -80,7 +80,7 @@ export const Logo = styled.div`
 
         >img{
             width: 35vw;
-            max-width: 100%;
+            max-width: 400px;
             max-height: 100%;
             object-fit: cover;
         }

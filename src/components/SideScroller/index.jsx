@@ -10,164 +10,169 @@ import { api } from '../../services/api'
 import { useState } from "react";
 
 export function SideScroller({category, isAdmin, isAbove, platesByCategory, ...rest}){
-    //Horizontal scroller - 
-    const leftArrowContainerRef = useRef(null)
-    const rightArrowContainerRef = useRef(null)
-    const cardListRef = useRef(null)
-    const [isFilledArray, setIsFilledArray] = useState(platesByCategory.map(() => false));
-    const [plateQuantities, setPlateQuantities] = useState(platesByCategory.map(() => "1"));
+  //Horizontal scroller - 
+  const leftArrowContainerRef = useRef(null)
+  const rightArrowContainerRef = useRef(null)
+  const cardListRef = useRef(null)
+  const [isFilledArray, setIsFilledArray] = useState(platesByCategory.map(() => false));
+  const [plateQuantities, setPlateQuantities] = useState(platesByCategory.map(() => "1"));
 
-    function handleHeart(index) {
-        setIsFilledArray(prevIsFilledArray => {
-          const newIsFilledArray = [...prevIsFilledArray];
-          newIsFilledArray[index] = !newIsFilledArray[index];
-          return newIsFilledArray;
-        });
-    }
+  async function handleHeart(index, id, name, avatar) {
+    const response = await api.post("/favorites", {
+      id,
+      name,
+      avatar
+    })
+    setIsFilledArray(prevIsFilledArray => {
+      const newIsFilledArray = [...prevIsFilledArray];
+      newIsFilledArray[index] = !newIsFilledArray[index];
+      return newIsFilledArray;
+    });
+  }
 
-    function setPlateQuantity(index, quantity) {
-        setPlateQuantities(prevQuantities => {
-          const newQuantities = [...prevQuantities];
-          newQuantities[index] = quantity;
-          return newQuantities;
-        });
-    }
+  function setPlateQuantity(index, quantity) {
+      setPlateQuantities(prevQuantities => {
+        const newQuantities = [...prevQuantities];
+        newQuantities[index] = quantity;
+        return newQuantities;
+      });
+  }
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-    function handleLeftArrowClick(){
-        cardListRef.current.scrollLeft -= 200;
-    }
+  function handleLeftArrowClick(){
+      cardListRef.current.scrollLeft -= 200;
+  }
 
-    function handleRightArrowClick(){
-        cardListRef.current.scrollLeft += 200;
-    }
+  function handleRightArrowClick(){
+      cardListRef.current.scrollLeft += 200;
+  }
 
-    function handleDetails(id){
-        navigate(`/preview/${id}`)
-    }
+  function handleDetails(id){
+      navigate(`/preview/${id}`)
+  }
 
-    function handleEdit(id){
-        navigate(`/edit/${id}`)
-    }
+  function handleEdit(id){
+      navigate(`/edit/${id}`)
+  }
 
-    function manageIcons() {
-        if (leftArrowContainerRef.current) {
-          if (cardListRef.current.scrollLeft >= 20) {
-            leftArrowContainerRef.current.classList.add("active");
-          } else {
-            leftArrowContainerRef.current.classList.remove("active");
-          }
+  function manageIcons() {
+      if (leftArrowContainerRef.current) {
+        if (cardListRef.current.scrollLeft >= 20) {
+          leftArrowContainerRef.current.classList.add("active");
+        } else {
+          leftArrowContainerRef.current.classList.remove("active");
         }
-      
-        if (rightArrowContainerRef.current) {
-          const hasOverflow =
-            cardListRef.current.scrollWidth > cardListRef.current.clientWidth;
-      
-          if (hasOverflow) {
-            let maxScrollValue =
-              cardListRef.current.scrollWidth - cardListRef.current.clientWidth - 20;
-      
-            if (cardListRef.current.scrollLeft >= maxScrollValue) {
-              rightArrowContainerRef.current.classList.remove("active");
-            } else {
-              rightArrowContainerRef.current.classList.add("active");
-            }
-          } else {
-            // Hide the right arrow container if there is no overflow
+      }
+    
+      if (rightArrowContainerRef.current) {
+        const hasOverflow =
+          cardListRef.current.scrollWidth > cardListRef.current.clientWidth;
+    
+        if (hasOverflow) {
+          let maxScrollValue =
+            cardListRef.current.scrollWidth - cardListRef.current.clientWidth - 20;
+    
+          if (cardListRef.current.scrollLeft >= maxScrollValue) {
             rightArrowContainerRef.current.classList.remove("active");
+          } else {
+            rightArrowContainerRef.current.classList.add("active");
           }
+        } else {
+          // Hide the right arrow container if there is no overflow
+          rightArrowContainerRef.current.classList.remove("active");
         }
-    }
+      }
+  }
 
-    useEffect(() => {
-        function handleScroll() {
-            manageIcons();
-        }
-        window.addEventListener('resize', handleScroll)
+  useEffect(() => {
+      function handleScroll() {
+          manageIcons();
+      }
+      window.addEventListener('resize', handleScroll)
 
-                // Manually call manageIcons after a slight delay
-            setTimeout(() => {
-                manageIcons();
-            }, 100);
+        // Manually call manageIcons after a slight delay
+      setTimeout(() => {
+          manageIcons();
+      }, 100);
 
-        // Attach the scroll event listener to the cardListRef if it exists
-        const cardListElement = cardListRef.current;
+      // Attach the scroll event listener to the cardListRef if it exists
+      const cardListElement = cardListRef.current;
+      if (cardListElement) {
+        cardListElement.addEventListener('scroll', handleScroll);
+      }
+    
+      // Clean up the event listener when the component unmounts
+      return () => {
+        window.removeEventListener('resize', handleScroll)
         if (cardListElement) {
-          cardListElement.addEventListener('scroll', handleScroll);
+          cardListElement.removeEventListener('scroll', handleScroll);
         }
-      
-        // Clean up the event listener when the component unmounts
-        return () => {
-          window.removeEventListener('resize', handleScroll)
-          if (cardListElement) {
-            cardListElement.removeEventListener('scroll', handleScroll);
-          }
-        };
-    }, [])
+      };
+  }, [])
 
-    return(
-        <Container>
-                <p>{category}</p>
-                <div className="sideScrollContainer">
-                        {isAbove &&
-                            <div className="svg" ref={leftArrowContainerRef}>
-                                <FiChevronLeft size={40}
-                                onClick={handleLeftArrowClick}/>
-                            </div>
-                        }
-                    <div className="sideScroll" ref={cardListRef}>
-                        {
-                            platesByCategory.map((plate, index) => (
-                            <Card key={String(plate.id)}>
-                            <img src={`${api.defaults.baseURL}/files/${plate.avatar}`} alt="" onClick={() => handleDetails(plate.id)}/>
-                            {isAdmin ? 
-                                <PiPencilSimple size={26} onClick={() => handleEdit(plate.id)}/> :
-                                <FiHeart
-                                size={26}
-                                onClick={() => handleHeart(index)}
-                                style={{
-                                  fill: isFilledArray[index] ? 'red' : 'none',
-                                  color: isFilledArray[index] ? 'red' : 'white',
-                                }}
-                              />
-                            }
-                            <dt>{plate.name}</dt>
-                            {isAbove && 
-                                <dd>{plate.description}</dd>
-                            }
-                            <h2>R$ {plate.price}</h2>
-                            <div>
-                              {!isAdmin && 
-                                <div>
-                                <FiMinus
-                                size={24}
-                                onClick={() => {
-                                    const newQuantity = parseInt(plateQuantities[index]) - 1;
-                                    if (newQuantity >= 0) {
-                                      setPlateQuantity(index, newQuantity); // Set quantity for specific plate
-                                    }
-                                }}
-                                />
-                                    <p>{plateQuantities[index].toString().padStart(2, '0')}</p>
-                                    <FiPlus size={24} onClick={() => setPlateQuantity(index, parseInt(plateQuantities[index]) + 1)} />
-                                </div>
-                                }
-                                {!isAdmin && 
-                                <Button title="incluir"/>
-                                }
-                            </div>
-                        </Card>
-                            ))
-                        }
-                    </div>
-                        {isAbove && 
-                            <div className="svg" ref={rightArrowContainerRef}>
-                                <FiChevronRight size={40}
-                                onClick={handleRightArrowClick}/>
-                            </div>
-                        }
-                </div>
-            </Container>
-    )
+  return(
+    <Container>
+            <p>{category}</p>
+            <div className="sideScrollContainer">
+                    {isAbove &&
+                        <div className="svg" ref={leftArrowContainerRef}>
+                            <FiChevronLeft size={40}
+                            onClick={handleLeftArrowClick}/>
+                        </div>
+                    }
+                <div className="sideScroll" ref={cardListRef}>
+                    {
+                      platesByCategory.map((plate, index) => (
+                      <Card key={String(plate.id)}>
+                      <img src={`${api.defaults.baseURL}/files/${plate.avatar}`} alt="" onClick={() => handleDetails(plate.id)}/>
+                      {isAdmin ? 
+                          <PiPencilSimple size={26} onClick={() => handleEdit(plate.id)}/> :
+                          <FiHeart
+                          size={26}
+                          onClick={() => handleHeart(index, plate.id, plate.name, plate.avatar)}
+                          style={{
+                            fill: isFilledArray[index] ? 'red' : 'none',
+                            color: isFilledArray[index] ? 'red' : 'white',
+                          }}
+                        />
+                      }
+                      <dt>{plate.name}</dt>
+                      {isAbove && 
+                          <dd>{plate.description}</dd>
+                      }
+                      <h2>R$ {plate.price}</h2>
+                      <div>
+                        {!isAdmin && 
+                          <div>
+                          <FiMinus
+                          size={24}
+                          onClick={() => {
+                              const newQuantity = parseInt(plateQuantities[index]) - 1;
+                              if (newQuantity >= 0) {
+                                setPlateQuantity(index, newQuantity); // Set quantity for specific plate
+                              }
+                          }}
+                          />
+                              <p>{plateQuantities[index].toString().padStart(2, '0')}</p>
+                              <FiPlus size={24} onClick={() => setPlateQuantity(index, parseInt(plateQuantities[index]) + 1)} />
+                          </div>
+                          }
+                          {!isAdmin && 
+                          <Button title="incluir"/>
+                          }
+                      </div>
+                  </Card>
+                      ))
+                  }
+              </div>
+                  {isAbove && 
+                      <div className="svg" ref={rightArrowContainerRef}>
+                          <FiChevronRight size={40}
+                          onClick={handleRightArrowClick}/>
+                      </div>
+                  }
+            </div>
+        </Container>
+  )
 }

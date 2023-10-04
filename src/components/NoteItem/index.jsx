@@ -5,9 +5,10 @@ import { Container } from "./styles";
 export function NoteItem({ isNew, value, onClick, ...rest }) {
     function handleKeyDown(event) {
         if (event.key === 'Enter' && isNew && value) {
-          onClick(value);
+            event.preventDefault();
+            onClick(value);
         }
-      }
+    }
     return (
         <Container isNew={isNew}>
             {isNew ? (

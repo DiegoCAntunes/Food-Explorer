@@ -20,7 +20,11 @@ export function Menu({ isOpen, setSearch, search, onClose }) {
 
   function handleNewPlate(){
     navigation(`/new`)
-}
+  }
+
+  function handleFavorites(){
+    navigation(`/favorites`)
+  }
 
   function handleSignOut(){
     navigation("/")
@@ -44,6 +48,7 @@ export function Menu({ isOpen, setSearch, search, onClose }) {
         />
         <ul>
           {isAdmin && <li onClick={handleNewPlate}>Novo prato</li>}
+          {!isAdmin && <li onClick={handleFavorites}>Meus Favoritos</li>}
           <li onClick={handleSignOut}>Sair</li>
         </ul>
       </Body>

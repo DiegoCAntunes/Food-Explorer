@@ -102,13 +102,13 @@ export const Body = styled.div`
                     justify-content: flex-start;
                     font-size: 14px;
                 }
-                    >div{
-                        >button{
-                            max-width: 180px;
-                            max-height: 48px;
-                            font-size: 14px;
-                        }
+                >div{
+                    >button{
+                        max-width: 180px;
+                        max-height: 48px;
+                        font-size: 14px;
                     }
+                }
             }
         }
     }

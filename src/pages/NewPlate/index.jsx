@@ -4,7 +4,6 @@ import { RiArrowDownSLine } from "react-icons/ri"
 
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
-import CaretLeft from "../../assets/CaretLeft.svg"
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { NoteItem } from "../../components/NoteItem";
@@ -41,7 +40,6 @@ export function NewPlate(){
         if (file) {
             setAvatarFile(file);
         }
-        console.log(avatarFile)
     }
 
     async function handleNewPlate(event){
@@ -55,7 +53,7 @@ export function NewPlate(){
             return alert("Enter a description")
         }
 
-        if(isNaN(price)){
+        if(isNaN(price.replace(',', '.'))){
             return alert("Price must be a number")
         }
 
@@ -156,6 +154,7 @@ export function NewPlate(){
                             <Input id="price" 
                                 placeholder="R$ 00,00"
                                 onChange={e => setPrice(e.target.value)}
+                                onBlur={(e) => setPrice(e.target.value.replace('.', ','))}
                             />
                         </Section>
                     </div>               
