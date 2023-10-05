@@ -18,6 +18,7 @@ export function Home(){
   const [plates, setPlates] = useState([])
   const [search, setSearch] = useState("")
   const categories = [];
+  const [userFavorites, setUserFavorites] = useState([])
   
   plates.forEach(plate => {
     const categoryExists = categories.some(cat => cat === plate.category);
@@ -33,15 +34,42 @@ export function Home(){
     acc[plate.category].push(plate);
     return acc;
   }, {});
+  
+  const updateUserFavorites = async () => {
+    try {
+      const response = await api.get('/favorites');
+      const favoriteIds = response.data.map(favorite => {
+        const plateData = JSON.parse(favorite.plate);
+        return { plateId: plateData.id, favoriteId: favorite.id };
+      });
+      setUserFavorites(favoriteIds);
+      console.log(userFavorites);
+    } catch (error) {
+      console.error('Error fetching user favorites:', error);
+    }
+  };
 
   useEffect(() => {
-      async function fetchPlates(){
-        const response = await api.get(`/plates?name=${search}&ingredients=${search}`)
-        setPlates(response.data)
+    async function fetchPlates(){
+      const response = await api.get(`/plates?name=${search}&ingredients=${search}`)
+      setPlates(response.data)
+    }
+    async function fetchUserFavorites() {
+      try {
+        const response = await api.get('/favorites');
+        const favoriteIds = response.data.map(favorite => {
+          const plateData = JSON.parse(favorite.plate);
+          return { plateId: plateData.id, favoriteId: favorite.id };
+        });
+        setUserFavorites(favoriteIds);
+      } catch (error) {
+        console.error('Error fetching user favorites:', error);
       }
-
-      fetchPlates()
-    }, [search]);
+    }
+  
+    fetchUserFavorites();
+    fetchPlates()
+  }, [search]);
 
 return(
     <Container>
@@ -63,6 +91,8 @@ return(
               isAdmin={isAdmin}
               isAbove={isAbove768px}
               platesByCategory={platesInCategory} // Pass the plates for this category
+              userFavorites={userFavorites}
+              updateUserFavorites={updateUserFavorites}
             />
           ))}
         </Body>

@@ -13,7 +13,8 @@ export function Favorites(){
         const confirm = window.confirm("Deseja realmente remover o prato?")
     
         if(confirm){
-          await api.delete(`/favorites/${id}`)
+            await api.delete(`/favorites/${id}`);
+            setFavPlates(prevFavPlates => prevFavPlates.filter(favPlate => favPlate.id !== id));
         }
     }
 

@@ -9,25 +9,29 @@ import { PiPencilSimple } from "react-icons/pi";
 import { api } from '../../services/api'
 import { useState } from "react";
 
-export function SideScroller({category, isAdmin, isAbove, platesByCategory, ...rest}){
+export function SideScroller({category, isAdmin, isAbove, platesByCategory, userFavorites, updateUserFavorites, ...rest}){
   //Horizontal scroller - 
   const leftArrowContainerRef = useRef(null)
   const rightArrowContainerRef = useRef(null)
   const cardListRef = useRef(null)
-  const [isFilledArray, setIsFilledArray] = useState(platesByCategory.map(() => false));
   const [plateQuantities, setPlateQuantities] = useState(platesByCategory.map(() => "1"));
 
   async function handleHeart(index, id, name, avatar) {
-    const response = await api.post("/favorites", {
-      id,
-      name,
-      avatar
-    })
-    setIsFilledArray(prevIsFilledArray => {
-      const newIsFilledArray = [...prevIsFilledArray];
-      newIsFilledArray[index] = !newIsFilledArray[index];
-      return newIsFilledArray;
-    });
+    const isFavorite = userFavorites.some(favorite => favorite.plateId === id);
+  
+    if (isFavorite) {
+      const favoriteData = userFavorites.find(favorite => favorite.plateId === id);
+      // Remove the plate from favorites
+      await api.delete(`/favorites/${favoriteData.favoriteId}`);
+    } else {
+      // Add the plate to favorites
+      await api.post("/favorites", {
+        id,
+        name,
+        avatar
+      });
+    }
+    updateUserFavorites(); // Call the function to update userFavorites
   }
 
   function setPlateQuantity(index, quantity) {
@@ -123,19 +127,23 @@ export function SideScroller({category, isAdmin, isAbove, platesByCategory, ...r
                     }
                 <div className="sideScroll" ref={cardListRef}>
                     {
-                      platesByCategory.map((plate, index) => (
+                      platesByCategory.map((plate, index) => {
+                        const isFavorite = userFavorites.some(favorite => favorite.plateId === plate.id);
+                        console.log(userFavorites)
+                        debugger
+                      return(
                       <Card key={String(plate.id)}>
                       <img src={`${api.defaults.baseURL}/files/${plate.avatar}`} alt="" onClick={() => handleDetails(plate.id)}/>
                       {isAdmin ? 
                           <PiPencilSimple size={26} onClick={() => handleEdit(plate.id)}/> :
                           <FiHeart
-                          size={26}
-                          onClick={() => handleHeart(index, plate.id, plate.name, plate.avatar)}
-                          style={{
-                            fill: isFilledArray[index] ? 'red' : 'none',
-                            color: isFilledArray[index] ? 'red' : 'white',
-                          }}
-                        />
+                            size={26}
+                            onClick={() => handleHeart(index, plate.id, plate.name, plate.avatar)}
+                            style={{
+                              fill: isFavorite ? 'red' : 'none',
+                              color: isFavorite ? 'red' : 'white',
+                            }}
+                          />
                       }
                       <dt>{plate.name}</dt>
                       {isAbove && 
@@ -163,7 +171,7 @@ export function SideScroller({category, isAdmin, isAbove, platesByCategory, ...r
                           }
                       </div>
                   </Card>
-                      ))
+                      )})
                   }
               </div>
                   {isAbove && 
