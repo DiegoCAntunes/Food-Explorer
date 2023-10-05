@@ -1,6 +1,6 @@
 import { Container, Cart } from "./styles";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PiReceipt, PiSignOut } from "react-icons/pi"
 import { FiMenu, FiSearch } from "react-icons/fi"
@@ -10,7 +10,7 @@ import { Menu } from "../Menu"
 
 import { useAuth } from "../../hooks/auth";
 
-export function Header({onChange, setSearch, search, ...rest}){
+export function Header({onChange, setSearch, search, totalPlates, updateTotalPlates, ...rest}){
     const { user, updateProfile } = useAuth()
     
     const [isAdmin, setIsAdmin] = useState(user.isAdmin)
@@ -24,6 +24,10 @@ export function Header({onChange, setSearch, search, ...rest}){
 
     function handleNewPlate(){
         navigation(`/new`)
+    }
+
+    function handleOrders(){
+        navigation(`/orders`)
     }
 
     function handleFavorites(){
@@ -42,6 +46,26 @@ export function Header({onChange, setSearch, search, ...rest}){
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    useEffect(() => {
+        const plateData = JSON.parse(localStorage.getItem('plateData')) || [];
+        if (updateTotalPlates){
+            updateTotalPlates(plateData);
+        }
+
+        const handleStorageChange = () => {
+          const plateData = JSON.parse(localStorage.getItem('plateData'));
+          if (updateTotalPlates){
+            updateTotalPlates(plateData);
+          }
+        };
+      
+        window.addEventListener('storage', handleStorageChange);
+      
+        return () => {
+          window.removeEventListener('storage', handleStorageChange);
+        };
+    }, [updateTotalPlates]);
 
     return(
         <Container>
@@ -80,14 +104,17 @@ export function Header({onChange, setSearch, search, ...rest}){
                     </svg>
 
                     <label htmlFor="avatar">
-                        <p>0</p>
+                        <p>{totalPlates}</p>
                     </label>
                 </Cart>
             )}
             {!isAdmin && (isAbove768px &&
             <>
                 <span onClick={handleFavorites}>Meus favoritos</span>
-                <Button icon={PiReceipt} title="Pedidos (0)"/>
+                <Button 
+                    icon={PiReceipt} 
+                    title={`Pedidos (${totalPlates || JSON.parse(localStorage.getItem('plateData') || '[]').length})`}
+                    onClick={handleOrders}/>
             </>
             )}
             {isAdmin && (isAbove768px &&

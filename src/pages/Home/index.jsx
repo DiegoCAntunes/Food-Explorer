@@ -19,6 +19,12 @@ export function Home(){
   const [search, setSearch] = useState("")
   const categories = [];
   const [userFavorites, setUserFavorites] = useState([])
+  const [totalPlates, setTotalPlates] = useState(0);
+
+  const updateTotalPlates = (plateData) => {
+    const total = plateData ? plateData.length : 0;
+    setTotalPlates(total);
+  };
   
   plates.forEach(plate => {
     const categoryExists = categories.some(cat => cat === plate.category);
@@ -73,9 +79,8 @@ export function Home(){
 
 return(
     <Container>
-        <Header onChange={e => setSearch(e.target.value)} setSearch={setSearch} search={search}/>
+        <Header onChange={e => setSearch(e.target.value)} setSearch={setSearch} search={search} totalPlates={totalPlates} updateTotalPlates={updateTotalPlates}/>
         <Body>
-
           <Logo>
               <img src={Macaron} alt="macaron image"/>
               <div>
@@ -93,6 +98,7 @@ return(
               platesByCategory={platesInCategory} // Pass the plates for this category
               userFavorites={userFavorites}
               updateUserFavorites={updateUserFavorites}
+              updateTotalPlates={updateTotalPlates}
             />
           ))}
         </Body>

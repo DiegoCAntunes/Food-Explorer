@@ -4,10 +4,16 @@ import { Footer } from "../../components/Footer"
 
 import { api } from '../../services/api'
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function Favorites(){
 
     const [favPlates, setFavPlates] = useState(null)
+    const navigate = useNavigate()
+
+    function handleDetails(id){
+        navigate(`/preview/${id}`)
+    }
 
     async function handleRemove(id){
         const confirm = window.confirm("Deseja realmente remover o prato?")

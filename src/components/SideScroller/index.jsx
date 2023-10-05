@@ -9,12 +9,29 @@ import { PiPencilSimple } from "react-icons/pi";
 import { api } from '../../services/api'
 import { useState } from "react";
 
-export function SideScroller({category, isAdmin, isAbove, platesByCategory, userFavorites, updateUserFavorites, ...rest}){
+export function SideScroller({category, isAdmin, isAbove, platesByCategory, userFavorites, updateUserFavorites,updateTotalPlates, ...rest}){
   //Horizontal scroller - 
   const leftArrowContainerRef = useRef(null)
   const rightArrowContainerRef = useRef(null)
   const cardListRef = useRef(null)
   const [plateQuantities, setPlateQuantities] = useState(platesByCategory.map(() => "1"));
+  
+  const navigate = useNavigate()
+
+  const handleIncluirClick = (plate, quantity) => {
+    const { name, price, avatar } = plate;
+    const plateData = { name, price, avatar, quantity };
+    
+    // Retrieve existing data from localStorage (if any)
+    const existingData = JSON.parse(localStorage.getItem('plateData')) || [];
+
+    // Add the new plate data to the existing data
+    const updatedData = [...existingData, plateData];
+
+    // Store the updated data back in localStorage
+    localStorage.setItem('plateData', JSON.stringify(updatedData));
+    updateTotalPlates(plateData);
+  };
 
   async function handleHeart(index, id, name, avatar) {
     const isFavorite = userFavorites.some(favorite => favorite.plateId === id);
@@ -41,8 +58,6 @@ export function SideScroller({category, isAdmin, isAbove, platesByCategory, user
         return newQuantities;
       });
   }
-
-  const navigate = useNavigate()
 
   function handleLeftArrowClick(){
       cardListRef.current.scrollLeft -= 200;
@@ -117,70 +132,68 @@ export function SideScroller({category, isAdmin, isAbove, platesByCategory, user
 
   return(
     <Container>
-            <p>{category}</p>
-            <div className="sideScrollContainer">
-                    {isAbove &&
-                        <div className="svg" ref={leftArrowContainerRef}>
-                            <FiChevronLeft size={40}
-                            onClick={handleLeftArrowClick}/>
-                        </div>
-                    }
-                <div className="sideScroll" ref={cardListRef}>
-                    {
-                      platesByCategory.map((plate, index) => {
-                        const isFavorite = userFavorites.some(favorite => favorite.plateId === plate.id);
-                        console.log(userFavorites)
-                        debugger
-                      return(
-                      <Card key={String(plate.id)}>
-                      <img src={`${api.defaults.baseURL}/files/${plate.avatar}`} alt="" onClick={() => handleDetails(plate.id)}/>
-                      {isAdmin ? 
-                          <PiPencilSimple size={26} onClick={() => handleEdit(plate.id)}/> :
-                          <FiHeart
-                            size={26}
-                            onClick={() => handleHeart(index, plate.id, plate.name, plate.avatar)}
-                            style={{
-                              fill: isFavorite ? 'red' : 'none',
-                              color: isFavorite ? 'red' : 'white',
-                            }}
-                          />
-                      }
-                      <dt>{plate.name}</dt>
-                      {isAbove && 
-                          <dd>{plate.description}</dd>
-                      }
-                      <h2>R$ {plate.price}</h2>
-                      <div>
-                        {!isAdmin && 
-                          <div>
-                          <FiMinus
-                          size={24}
-                          onClick={() => {
-                              const newQuantity = parseInt(plateQuantities[index]) - 1;
-                              if (newQuantity >= 0) {
-                                setPlateQuantity(index, newQuantity); // Set quantity for specific plate
-                              }
-                          }}
-                          />
-                              <p>{plateQuantities[index].toString().padStart(2, '0')}</p>
-                              <FiPlus size={24} onClick={() => setPlateQuantity(index, parseInt(plateQuantities[index]) + 1)} />
-                          </div>
-                          }
-                          {!isAdmin && 
-                          <Button title="incluir"/>
-                          }
-                      </div>
-                  </Card>
-                      )})
-                  }
+      <p>{category}</p>
+      <div className="sideScrollContainer">
+          {isAbove &&
+              <div className="svg" ref={leftArrowContainerRef}>
+                  <FiChevronLeft size={40}
+                  onClick={handleLeftArrowClick}/>
               </div>
-                  {isAbove && 
-                      <div className="svg" ref={rightArrowContainerRef}>
-                          <FiChevronRight size={40}
-                          onClick={handleRightArrowClick}/>
-                      </div>
-                  }
+          }
+      <div className="sideScroll" ref={cardListRef}>
+          {
+            platesByCategory.map((plate, index) => {
+              const isFavorite = userFavorites.some(favorite => favorite.plateId === plate.id);
+            return(
+            <Card key={String(plate.id)}>
+            <img src={`${api.defaults.baseURL}/files/${plate.avatar}`} alt="" onClick={() => handleDetails(plate.id)}/>
+            {isAdmin ? 
+                <PiPencilSimple size={26} onClick={() => handleEdit(plate.id)}/> :
+                <FiHeart
+                  size={26}
+                  onClick={() => handleHeart(index, plate.id, plate.name, plate.avatar)}
+                  style={{
+                    fill: isFavorite ? 'red' : 'none',
+                    color: isFavorite ? 'red' : 'white',
+                  }}
+                />
+            }
+            <dt>{plate.name}</dt>
+            {isAbove && 
+                <dd>{plate.description}</dd>
+            }
+            <h2>R$ {plate.price}</h2>
+            <div>
+              {!isAdmin && 
+                <div>
+                <FiMinus
+                size={24}
+                onClick={() => {
+                    const newQuantity = parseInt(plateQuantities[index]) - 1;
+                    if (newQuantity >= 0) {
+                      setPlateQuantity(index, newQuantity); // Set quantity for specific plate
+                    }
+                }}
+                />
+                    <p>{plateQuantities[index].toString().padStart(2, '0')}</p>
+                    <FiPlus size={24} onClick={() => setPlateQuantity(index, parseInt(plateQuantities[index]) + 1)} />
+                </div>
+                }
+                {!isAdmin && 
+                <Button title="incluir" onClick={() => handleIncluirClick(plate, plateQuantities[index])}/>
+                }
             </div>
-        </Container>
+        </Card>
+            )})
+        }
+      </div>
+        {isAbove && 
+            <div className="svg" ref={rightArrowContainerRef}>
+                <FiChevronRight size={40}
+                onClick={handleRightArrowClick}/>
+            </div>
+        }
+      </div>
+    </Container>
   )
 }
