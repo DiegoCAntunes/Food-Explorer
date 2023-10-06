@@ -8,7 +8,6 @@ export const Container = styled.div`
 
     border: 1px solid ${({theme}) => theme.COLORS.LIGHT_600};
     border-radius: 8px;
-    overflow: hidden;
 
     >.tabs{
         display: flex;
@@ -26,6 +25,7 @@ export const Container = styled.div`
             justify-content: center;
             align-items: center;
             height: 81px;
+            overflow: hidden;
         }
 
         >.active{
@@ -34,12 +34,41 @@ export const Container = styled.div`
     }
 
     >.content{
-        padding: 47px 130px;
+        display: flex;
         align-items: center;
         justify-content: center;
+        padding: 31px 27px;
+        width: 100%;
 
         >svg{
             color: ${({theme}) => theme.COLORS.LIGHT_600};
         }
+        >div{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 37px;
+
+            >.secondrow{
+                width: 100%;
+                display: flex;
+                gap: 17px;
+                max-width: none;
+                border: none;
+                >div{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .input{
+        >div{
+            background-color: transparent;
+            border: 1px solid ${({theme}) => theme.COLORS.LIGHT_100};
+        }
+    }
+
+    @media screen and (min-width:768px) {
+
     }
 `

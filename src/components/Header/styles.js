@@ -45,6 +45,7 @@ export const Container = styled.header`
 
     .button{
         max-height: 50px;
+        max-width: 180px;
     }
 
     @media screen and (min-width:768px) {

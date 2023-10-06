@@ -34,11 +34,17 @@ export function Header({onChange, setSearch, search, totalPlates, updateTotalPla
         navigation(`/favorites`)
     }
 
+    function handleOrderDetails(){
+        navigation(`/orderDetails`)
+    }
+
     function handleHome(){
         navigation("/")
     }
 
     function handleSignOut(){
+        const updatedPlateData = []; // Set an empty array to remove all plates
+        localStorage.setItem('plateData', JSON.stringify(updatedPlateData));
         navigation("/")
         signOut()
     }
@@ -96,7 +102,7 @@ export function Header({onChange, setSearch, search, totalPlates, updateTotalPla
             )}
             
             {!isAdmin && (!isAbove768px &&
-                <Cart>
+                <Cart onClick={handleOrders}>
                     <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd" d="M8.96094 13C8.96094 12.4477 9.40865 12 9.96094 12H22.9609C23.5132 12 23.9609 12.4477 23.9609 13C23.9609 13.5523 23.5132 14 22.9609 14H9.96094C9.40865 14 8.96094 13.5523 8.96094 13Z" fill="white"/>
                     <path fillRule="evenodd" clipRule="evenodd" d="M8.96094 17C8.96094 16.4477 9.40865 16 9.96094 16H22.9609C23.5132 16 23.9609 16.4477 23.9609 17C23.9609 17.5523 23.5132 18 22.9609 18H9.96094C9.40865 18 8.96094 17.5523 8.96094 17Z" fill="white"/>
@@ -111,6 +117,7 @@ export function Header({onChange, setSearch, search, totalPlates, updateTotalPla
             {!isAdmin && (isAbove768px &&
             <>
                 <span onClick={handleFavorites}>Meus favoritos</span>
+                <span onClick={handleOrderDetails}>Histórico de pedidos</span>
                 <Button 
                     icon={PiReceipt} 
                     title={`Pedidos (${totalPlates || JSON.parse(localStorage.getItem('plateData') || '[]').length})`}

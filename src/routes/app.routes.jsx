@@ -6,6 +6,7 @@ import { PlateDetails } from "../pages/PlateDetails"
 import { EditPlate } from "../pages/EditPlate"
 import { Favorites } from "../pages/Favorites"
 import { Orders } from "../pages/Orders";
+import { OrderDetails } from "../pages/OrderDetails";
 
 export function AppRoutes(){
     return(
@@ -16,6 +17,7 @@ export function AppRoutes(){
             <Route path="/edit/:id" element={<EditPlate />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/orderDetails" element={<OrderDetails />} />
         </Routes>
     )
 }
