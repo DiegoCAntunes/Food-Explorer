@@ -18,12 +18,16 @@ export const Container = styled.header`
     left: 0;
     width: 100%;
     height: 100%;
-    display: none;
+
     z-index: 999; /* A high z-index to ensure it's on top of everything */
+    
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
     }
 
     .menu.open {
         display: flex;
+        transform: translateX(0);
     }
 
     >div{

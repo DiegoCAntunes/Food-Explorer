@@ -34,7 +34,7 @@ export function Menu({ isOpen, setSearch, search, onClose }) {
   const [isAdmin, setIsAdmin] = useState(user.isAdmin)
   
   return (
-    <Container className={`menu ${isOpen ? 'open' : ''}`}>
+    <Container data-menu-is-open={true} className={`menu ${isOpen ? 'open' : ''}`}>
       <Header>
           <FiX size={36} onClick={onClose}/>
         <h1>Menu</h1>
