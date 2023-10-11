@@ -4,9 +4,8 @@ export const Container = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: ${({theme}) => theme.COLORS.DARK_400};
-    color: ${({theme}) => theme.COLORS.LIGHT_300};
-`
+    background-color: ${({ theme }) => theme.COLORS.DARK_400};
+`;
 
 export const Body = styled.form`
     display: flex;
@@ -14,11 +13,11 @@ export const Body = styled.form`
     gap: 16px;
     padding: 8px;
     margin: 16px 32px;
-
     font-family: "Poppins", sans-serif;
-    background-color: ${({theme}) => theme.COLORS.DARK_400};
+    background-color: ${({ theme }) => theme.COLORS.DARK_400};
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
 
-    >div:first-of-type{
+    > div:first-of-type {
         display: flex;
         align-items: center;
         cursor: pointer;
@@ -26,93 +25,90 @@ export const Body = styled.form`
         justify-content: center;
     }
 
-    .sectionContainer{
+    .sectionContainer {
         display: flex;
         flex-direction: column;
         gap: 16px;
 
-        .firstRow{
+        .firstRow {
             display: flex;
-        flex-direction: column;
-        gap: 16px;
+            flex-direction: column;
+            gap: 16px;
         }
     }
 
-    >h1{
+    > h1 {
         font-weight: 400;
     }
 
-    >.sectionContainer{
+    > .sectionContainer {
         margin-bottom: 8px;
     }
 
-    >div:last-of-type{
+    > div:last-of-type {
         display: flex;
         gap: 32px;
         justify-content: flex-end;
 
-        >button:first-child{
+        > button:first-child {
             display: inline;
-            background-color: ${({theme}) => theme.COLORS.DARK_800};
+            background-color: ${({ theme }) => theme.COLORS.DARK_800};
         }
     }
 
-    @media screen and (min-width:768px) {
+    @media screen and (min-width: 768px) {
         padding: 40px 8vw;
         margin: 0;
 
-        .sectionContainer{
+        .sectionContainer {
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
 
-            .firstRow{
+            .firstRow {
                 display: flex;
                 flex-direction: row;
                 gap: 32px;
 
-                .img{
+                .img {
                     max-width: 230px;
                 }
 
-                .category{
+                .category {
                     width: 50%;
                 }
             }
 
-            .secondRow{
+            .secondRow {
                 display: flex;
                 flex-direction: row;
                 gap: 32px;
 
-                .price{
+                .price {
                     width: 20%;
                 }
             }
         }
 
-        >div{
-            >button{
+        > div {
+            > button {
                 width: auto;
                 height: auto;
                 padding: 12px 24px;
                 white-space: nowrap;
                 align-self: flex-end;
-                background-color: ${({theme}) => theme.COLORS.RED_400};
+                background-color: ${({ theme }) => theme.COLORS.RED_400};
             }
         }
     }
-
-`
+`;
 
 export const Section = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
     width: 100%;
-
     position: relative;
-
     font-weight: 200;
 
     > button {
@@ -151,39 +147,34 @@ export const Section = styled.div`
             pointer-events: none; /* Disable pointer events on the SVG */
         }
     }
-    >.dark{
-        background-color: ${({theme})=> theme.COLORS.DARK_800};
+
+    > .dark {
+        background-color: ${({ theme }) => theme.COLORS.DARK_800};
         padding: 8px;
         border-radius: 8px;
         height: 48px;
         justify-content: flex-start;
         gap: 16px;
 
-        >div{
+        > div {
             margin-bottom: 0;
         }
     }
-        >textarea{
-            background-color: ${({theme}) => theme.COLORS.DARK_800};
-            font-family: Roboto, sans-serif;
-            font-weight: 700;
-            width: 100%;
-            min-height: 172px;
-            resize: none;
 
-            border-radius: 8px;
-    
-            padding: 16px 14px;
-    
-            color: ${({theme}) => theme.COLORS.LIGHT_100};
-            border: 0;
-    
-            &:placeholder{
-                color: ${({theme}) => theme.COLORS.LIGHT_500};
-            }
+    > textarea {
+        background-color: ${({ theme }) => theme.COLORS.DARK_800};
+        font-family: Roboto, sans-serif;
+        font-weight: 700;
+        width: 100%;
+        min-height: 172px;
+        resize: none;
+        border-radius: 8px;
+        padding: 16px 14px;
+        color: ${({ theme }) => theme.COLORS.LIGHT_100};
+        border: 0;
+
+        &::placeholder {
+            color: ${({ theme }) => theme.COLORS.LIGHT_500};
         }
+    }
 `;
-
-
-
-

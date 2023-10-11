@@ -7,47 +7,46 @@ export const Container = styled.div`
 
     background: ${({theme, isNew})=> isNew ? "transparent" : theme.COLORS.LIGHT_500};
     color: ${({theme})=> theme.COLORS.DARK_800};
-
     border: ${({theme, isNew})=> isNew ? `2px dashed ${theme.COLORS.LIGHT_500}` : 'none'};
-
-    margin-bottom: 8px;
     border-radius: 8px;
+    margin-bottom: 8px;
     padding-right: 16px;
 
-    >button{
+    > button {
         border: none;
         background: none;
         transform: translateY(10%);
     }
 
-    .button-delete{
+    .button-delete {
         color: ${({theme})=> theme.COLORS.LIGHT_100};
     }
-    .button-add{
+
+    .button-add {
         color: ${({theme})=> theme.COLORS.LIGHT_500};
     }
 
     > input {
-        font-family:Poppins, sans-serif;
+        font-family: Poppins, sans-serif;
         padding: 12px;
         color: ${({theme})=> theme.COLORS.LIGHT_100};
         background: transparent;
-        width:100%;
+        width: 100%;
         max-width: 125px;
         border: none;
 
-        &::placeholder{
+        &::placeholder {
             color: ${({theme})=> theme.COLORS.LIGHT_600};
         }
     }
 
-    >span{
-        font-family:Poppins, sans-serif;
+    > span {
+        font-family: Poppins, sans-serif;
         font-weight: 400;
         padding: 12px;
         color: ${({theme})=> theme.COLORS.LIGHT_100};
         background: transparent;
-        width:100%;
+        width: 100%;
         border: none;
     }
 `

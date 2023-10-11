@@ -1,44 +1,50 @@
-import { createContext, useContext, useState, useEffect } from "react";
-
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { api } from "../services/api"
 
+// Create a context for authentication
 export const AuthContext = createContext({})
 
-function AuthProvider({ children}){
+// Authentication Provider component
+function AuthProvider({ children }) {
+    // State to hold user data
     const [data, setData] = useState({})
 
-    async function signIn({ email, password}){
-
-        try{
+    // Function to handle user sign in
+    async function signIn({ email, password }) {
+        try {
             const response = await api.post("/sessions", { email, password })
             const { user, token } = response.data
 
+            // Store user data in local storage
             localStorage.setItem("@rocketfoods:user", JSON.stringify(user))
             localStorage.setItem("@rocketfoods:token", token)
 
+            // Set the token in API headers
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-            setData({user, token})
+            setData({ user, token })
 
-        }catch(error){
-            if(error.response){
+        } catch (error) {
+            if (error.response) {
                 alert(error.response.data.message)
-            }else{
+            } else {
                 alert("Error during SignIn")
             }
         }
     }
 
-    function signOut(){
+    // Function to handle user sign out
+    function signOut() {
         localStorage.removeItem("@rocketfoods:user")
         localStorage.removeItem("@rocketfoods:token")
 
         setData({})
     }
 
-    async function updateProfile({ user, avatarFile }){
-        try{
+    // Function to update user profile
+    async function updateProfile({ user, avatarFile }) {
+        try {
 
-            if(avatarFile){
+            if (avatarFile) {
                 const fileUploadForm = new FormData()
                 fileUploadForm.append("avatar", avatarFile)
 
@@ -52,20 +58,21 @@ function AuthProvider({ children}){
             setData({ user, token: data.token })
             alert("Profile updated")
 
-        }catch(error){
-            if(error.response){
+        } catch (error) {
+            if (error.response) {
                 alert(error.response.data.message)
-            }else{
+            } else {
                 alert("Error during SignIn")
             }
         }
     }
 
+    // Effect to run on component mount
     useEffect(() => {
         const user = localStorage.getItem("@rocketfoods:user")
         const token = localStorage.getItem("@rocketfoods:token")
 
-        if(token && user){
+        if (token && user) {
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
             setData({
@@ -73,13 +80,13 @@ function AuthProvider({ children}){
                 user: JSON.parse(user)
             })
         }
-
     }, [])
 
-    return(
+    // Render the provider with the provided value
+    return (
         <AuthContext.Provider value={{ 
             signIn, 
-            user:data.user,
+            user: data.user,
             signOut,
             updateProfile
         }}>
@@ -88,7 +95,8 @@ function AuthProvider({ children}){
     )
 }
 
-function useAuth(){
+// Hook to use the authentication context
+function useAuth() {
     const context = useContext(AuthContext)
 
     return context

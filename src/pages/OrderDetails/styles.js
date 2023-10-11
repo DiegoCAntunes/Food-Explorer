@@ -5,22 +5,21 @@ export const Container = styled.div`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: ${({ theme }) => theme.COLORS.DARK_400};
+`;
 
-    background-color: ${({theme}) => theme.COLORS.DARK_400};
-    color: ${({theme}) => theme.COLORS.LIGHT_300};
-`
 export const Body = styled.div`
     height: 100%;
     width: 100%;
     padding: 34px 8vw;
     font-family: "Poppins", sans-serif;
-
     display: flex;
     gap: 27px;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    background-color: ${({theme}) => theme.COLORS.DARK_400};
+    background-color: ${({ theme }) => theme.COLORS.DARK_400};
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
 
     .status-circle {
         display: inline-block;
@@ -36,26 +35,25 @@ export const Body = styled.div`
         gap: 6px;
     }
 
-    >ul{
+    > ul {
         display: flex;
         gap: 48px;
         justify-content: flex-start;
         list-style: none;
         flex-wrap: wrap;
 
-        >li{
+        > li {
             display: flex;
             gap: 13px;
             align-items: center;
             padding: 16px 20px;
-
-            border: 2px solid ${({theme}) => theme.COLORS.DARK_1000};
+            border: 2px solid ${({ theme }) => theme.COLORS.DARK_1000};
             border-radius: 8px;
 
-            >div{
+            > div {
                 font-size: 18px;
 
-                >div{
+                > div {
                     display: flex;
                     gap: 31px;
                     margin-bottom: 16px;
@@ -65,12 +63,12 @@ export const Body = styled.div`
         }
     }
 
-    >table{
+    > table {
         border-collapse: collapse;
         width: 100%;
 
         .status {
-        position: relative;
+            position: relative;
         }
 
         .status-circle {
@@ -80,23 +78,23 @@ export const Body = styled.div`
             left: 24px;
         }
 
-        .status-text{
+        .status-text {
             margin-left: 25px;
         }
 
-        th, td{
-            border: 2px solid ${({theme}) => theme.COLORS.DARK_1000};
+        th, td {
+            border: 2px solid ${({ theme }) => theme.COLORS.DARK_1000};
             padding: 16px 24px;
             text-align: left; /* Adjust as needed */
             min-height: 60px;
         }
-        th:first-of-type{
-        border-top-left-radius: 8px;
+
+        th:first-of-type {
+            border-top-left-radius: 8px;
         }
 
-        th:last-of-type{
-        border-top-right-radius: 8px;
+        th:last-of-type {
+            border-top-right-radius: 8px;
         }
-
     }
-`
+`;

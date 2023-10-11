@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    background: transparent;
     font-family: Roboto, sans-serif;
     font-weight: 400;
     color: ${({theme}) => theme.COLORS.LIGHT_100};
+    background: transparent;
     height: auto;
 `
 
@@ -18,13 +18,10 @@ export const Form = styled.div`
     background-color: ${({theme}) => theme.COLORS.DARK_900};
     color: ${({theme}) => theme.COLORS.LIGHT_100};
 
-    /* overflow: hidden ; */
-
     >input {
         font-family: Roboto, sans-serif;
         font-weight: 700;
         width: 100%;
-
         padding: 16px 14px;
 
         color: ${({theme}) => theme.COLORS.LIGHT_100};

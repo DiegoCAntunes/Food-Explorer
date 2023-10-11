@@ -2,22 +2,19 @@ import styled from "styled-components";
 
 export const Container = styled.button`
     width: 100%;
+    height: 56px;
     background-color: ${({theme}) => theme.COLORS.RED_100};
     color: ${({theme}) => theme.COLORS.LIGHT_100};
-
-    height: 56px;
-    border:0;
-    width: 100%;
+    border: 0;
     border-radius: 5px;
     font-family: Poppins, sans-serif;
-    font-weight:500;
-
+    font-weight: 500;
     align-items: center;
     justify-content: center;
     display: flex;
     gap: 8px;
 
-    &:disabled{
+    &:disabled {
         opacity: 0.5;
     }
 
@@ -31,4 +28,4 @@ export const Container = styled.button`
         cursor: pointer;
         z-index: 1;
     }
-`
+`;

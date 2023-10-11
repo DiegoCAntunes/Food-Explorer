@@ -5,20 +5,19 @@ export const Container = styled.div`
     flex-direction: column;
     width: 100%;
     max-width: 530px;
-
     border: 1px solid ${({theme}) => theme.COLORS.LIGHT_600};
     border-radius: 8px;
 
-    >.tabs{
+    > .tabs {
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid ${({theme}) => theme.COLORS.LIGHT_600};
 
-        >div:first-of-type{
+        > div:first-of-type {
             border-right: 1px solid ${({theme}) => theme.COLORS.LIGHT_600};
         }
 
-        >div{
+        > div {
             display: flex;
             gap: 8px;
             width: 50%;
@@ -28,47 +27,46 @@ export const Container = styled.div`
             overflow: hidden;
         }
 
-        >.active{
+        > .active {
             background-color: ${({theme}) => theme.COLORS.DARK_800};
         }
     }
 
-    >.content{
+    > .content {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 31px 27px;
         width: 100%;
 
-        >svg{
+        > svg {
             color: ${({theme}) => theme.COLORS.LIGHT_600};
         }
-        >div{
+
+        > div {
             display: flex;
             flex-direction: column;
             width: 100%;
             gap: 37px;
 
-            >.secondrow{
+            > .secondrow {
                 width: 100%;
                 display: flex;
                 gap: 17px;
                 max-width: none;
                 border: none;
-                >div{
+
+                > div {
                     width: 100%;
                 }
             }
         }
     }
-    .input{
-        >div{
+
+    .input {
+        > div {
             background-color: transparent;
             border: 1px solid ${({theme}) => theme.COLORS.LIGHT_100};
         }
     }
-
-    @media screen and (min-width:768px) {
-
-    }
-`
+`;

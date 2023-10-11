@@ -30,39 +30,42 @@ export function EditPlate(){
     const params = useParams()
     const navigate = useNavigate()
 
-    //handling the ingredients
-    function handleAddIngredient(){
+    // Function to add a new ingredient
+    function handleAddIngredient() {  
         const newIngredient = {
-            id: null, 
+            id: null,
             name: newIngredients[0]?.name || '',
             plate_id: params.id // Add the plate_id
         };
-    
+
         setIngredients(prevState => [...prevState, newIngredient]);
         setNewIngredients([]);
     }
 
-    function handleRemoveIngredients(deleted){
+    // Function to remove an ingredient
+    function handleRemoveIngredients(deleted) {  
         setIngredients(prevState => prevState.filter(Ingredient => Ingredient !== deleted))
     }
 
-    function handleBack(){
+    // Function to navigate back
+    function handleBack() {  
         navigate(-1)
     }
 
-    async function handleRemove(){
+    // Function to handle plate removal
+    async function handleRemove() {  
         const confirm = window.confirm("Deseja realmente remover o prato?")
-    
-        if(confirm){
-          await api.delete(`/plates/${params.id}`)
-          handleBack()
+
+        if (confirm) {
+            await api.delete(`/plates/${params.id}`)
+            handleBack()
         }
     }
 
-    async function updatePlate({ plate, avatarFile }){
-        try{
-
-            if(avatarFile){
+    // Function to update plate details
+    async function updatePlate({ plate, avatarFile }) {  
+        try {
+            if (avatarFile) {
                 const fileUploadForm = new FormData()
                 fileUploadForm.append("avatar", avatarFile)
 
@@ -74,18 +77,19 @@ export function EditPlate(){
 
             setData({ plate, token: data.token })
 
-        }catch(error){
-            if(error.response){
+        } catch (error) {
+            if (error.response) {
                 alert(error.response.data.message)
-            }else{
+            } else {
                 alert("Error")
             }
         }
     }
 
-    async function handleModifyPlate(){
+    // Function to handle plate modification
+    async function handleModifyPlate() {  
         const ingredientNames = ingredients.map(ingredient => ingredient.name);
-        const updated={
+        const updated = {
             name,
             description,
             category,
@@ -93,16 +97,14 @@ export function EditPlate(){
             ingredients: ingredientNames
         }
 
-        // const plateUpdated = Object.assign(plate, updated)
-
         await updatePlate({ plate: updated, avatarFile })
 
         alert("Prato modificado!")
         navigate(-1)
     }
 
-    //Avatar
-    function handleChangeAvatar(event) {
+    // Function to handle avatar change
+    function handleChangeAvatar(event) {  
         const file = event.target.files[0];
         if (file) {
             setAvatarFile(file);

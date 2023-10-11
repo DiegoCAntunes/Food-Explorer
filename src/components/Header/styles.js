@@ -5,24 +5,21 @@ export const Container = styled.header`
     color: ${({theme})=> theme.COLORS.LIGHT_100};
     display: flex;
     align-items: center;
-    padding: 56px 28px 24px;
     justify-content: space-between;
-
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     font-size: 12px;
+    padding: 56px 28px 24px;
 
     .menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    z-index: 999; /* A high z-index to ensure it's on top of everything */
-    
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
     }
 
     .menu.open {
@@ -30,24 +27,25 @@ export const Container = styled.header`
         transform: translateX(0);
     }
 
-    >div{
+    >div {
         display: flex;
         gap: 8px;
         align-items: flex-start;
         cursor: pointer;
 
-        >.logo{
+        >.logo {
             display: flex;
             align-items: center;
             gap: 8px;
-            >p{
+
+            >p {
                 color: ${({theme})=> theme.COLORS.BLUE_200};
                 transform: translateY(10%);
             }
         }
     }
 
-    .button{
+    .button {
         max-height: 50px;
         max-width: 180px;
     }
@@ -58,52 +56,49 @@ export const Container = styled.header`
         justify-content: center;
         white-space: nowrap;
 
-        >span{
+        >span {
             font-size: 16px;
             cursor: pointer;
         }
 
-        >div{
-            >.logo{
+        >div {
+            >.logo {
                 display: block;
                 text-align: end;
             }
         }
 
-        >.input{
-            width:100%;
+        >.input {
+            width: 100%;
             max-width: 581px;
-            >div{
+            >div {
                 margin-top: 0;
             }
         }
 
-        >button{
+        >button {
             max-width: 216px;
         }
-        >svg{
+
+        >svg {
             min-width: 32px;
         }
     }
-`
+`;
 
 export const Cart = styled.div`
     position: relative;
 
-    >label{
+    >label {
         width: 20px;
         height: 20px;
-
         background-color: ${({theme})=> theme.COLORS.RED_100};
         border-radius: 50%;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
         position: absolute;
         top: -2px;
         right: -5px;
-        
     }
-`
+`;
