@@ -85,6 +85,9 @@ export const Body = styled.form`
             max-width: 172px;
             align-self: flex-end;
             background-color: ${({ theme }) => theme.COLORS.RED_400};
+            padding: 12px 24px;
+            word-wrap: normal;
+            min-width: fit-content;
         }
 
         ::-webkit-scrollbar {

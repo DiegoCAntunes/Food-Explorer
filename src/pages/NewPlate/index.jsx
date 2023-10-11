@@ -26,6 +26,7 @@ export function NewPlate(){
 
     function handleAddIngredient(newIngredient) {
         if (newIngredient) {
+        console.log(newIngredient); 
           setIngredients(prevState => [...prevState, newIngredient]);
           setNewIngredient("");
         }
@@ -145,7 +146,7 @@ export function NewPlate(){
                                     placeholder="Novo marcador"
                                     onChange={e => setNewIngredient(e.target.value)}
                                     value={newIngredient}
-                                    onClick={handleAddIngredient}
+                                    onClick={() => handleAddIngredient(newIngredient)}
                                 />
                             </div>
                         </Section>
