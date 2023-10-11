@@ -26,6 +26,10 @@ export function Menu({ isOpen, setSearch, search, onClose }) {
     navigation(`/favorites`)
   }
 
+  function handleOrderDetails(){
+    navigation(`/orderDetails`)
+  }
+
   function handleSignOut(){
     navigation("/")
     signOut()
@@ -49,6 +53,7 @@ export function Menu({ isOpen, setSearch, search, onClose }) {
         <ul>
           {isAdmin && <li onClick={handleNewPlate}>Novo prato</li>}
           {!isAdmin && <li onClick={handleFavorites}>Meus Favoritos</li>}
+          <li onClick={handleOrderDetails}>Histórico de pedidos</li>
           <li onClick={handleSignOut}>Sair</li>
         </ul>
       </Body>

@@ -111,7 +111,7 @@ export function Header({onChange, setSearch, search, totalPlates, updateTotalPla
                     </svg>
 
                     <label htmlFor="avatar">
-                        <p>{totalPlates}</p>
+                        <p>{totalPlates || JSON.parse(localStorage.getItem('plateData') || '[]').length}</p>
                     </label>
                 </Cart>
             )}
@@ -128,7 +128,7 @@ export function Header({onChange, setSearch, search, totalPlates, updateTotalPla
             {isAdmin && (isAbove768px &&
                 <Button title="Novo Prato" onClick={handleNewPlate}/>
             )}
-
+    
             {isAbove768px && (
                 <PiSignOut size={32} onClick={handleSignOut}/>
             )}
