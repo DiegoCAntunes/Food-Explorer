@@ -1,4 +1,4 @@
-# Food Explorer API 
+# Food Explorer ![Icon](/src/assets/readmeIcon.png)
 
 This is the frontend component of the Food Explorer application, a virtual restaurant platform that provides users with a seamless and engaging culinary experience. The frontend is responsible for presenting the user interface, allowing customers to interact with the restaurant's menu, manage their orders, and explore various dishes.
 
