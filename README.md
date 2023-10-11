@@ -38,7 +38,7 @@ This is the frontend component of the Food Explorer application, a virtual resta
 1. **Clone the Repository**
 
     ```bash
-    git clone https://github.com/your_username/your_project.git
+    git clone https://github.com/ItsDigs/Food-Explorer
     cd your_project
 
 2. **Install dependencies**
