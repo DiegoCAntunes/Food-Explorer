@@ -51,7 +51,6 @@ export function Header({onChange, setSearch, search, totalPlates, updateTotalPla
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-        console.log(isMenuOpen)
     };
 
     useEffect(() => {

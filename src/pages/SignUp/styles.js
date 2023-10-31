@@ -13,6 +13,7 @@ export const Form = styled.form`
     flex-direction: column;
     justify-content: center;
     padding: 150px 56px 0 56px;
+    max-width: 1100px;
 
     > div:first-child {
         display: flex;
